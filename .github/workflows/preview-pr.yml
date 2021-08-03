@@ -13,7 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase Preview URL
+        uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
@@ -21,7 +22,6 @@ jobs:
           expires: 7d
           projectId: cloudponics-a0403
       - name: Comment Preview URL on PR
-        if: ${{ steps.deploy.conclusion }} == 'success'
         uses: thollander/actions-comment-pull-request@master
         with:
           message: 'Hello! A preview deployment of your PR can be found here: ${{ steps.deploy.outputs.details_url }}'
