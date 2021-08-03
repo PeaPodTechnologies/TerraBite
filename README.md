@@ -9,16 +9,9 @@ Remote config and monitoring dashboard for PeaPod systems.
 
 Single-page webapp. Built with React (TypeScript), MaterialUI and Redux for state management.
 
-1. Landing page (form selection)
-2. Checklist page (prerequisites, parameterized checklist generation)
-3. Outcome page (success or personal doc fetch or form fill)
-
 ## Backend
 
 Serverless hosting via Firebase.
-
-1. Database with a table of forms with their checklists
-2. Webapp hosting
 
 # Development
 
