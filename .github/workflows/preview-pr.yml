@@ -15,14 +15,8 @@ jobs:
       - run: npm install && npm run build
       - name: Deploy to Firebase Preview URL
         uses: FirebaseExtended/action-hosting-deploy@v0
-        id: deploy
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLOUDPONICS_A0403 }}'
           expires: 7d
           projectId: cloudponics-a0403
-      - name: Comment Preview URL on PR
-        uses: thollander/actions-comment-pull-request@master
-        with:
-          message: 'Hello! A preview deployment of your PR can be found here: ${{ steps.deploy.outputs.details_url }}'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
