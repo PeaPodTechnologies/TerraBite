@@ -4,9 +4,9 @@ on:
   pull_request:
     paths:
     - "src/**"
-    branches-ignore:
-    - "master"
-    - "staging"
+    # branches-ignore:
+    # - "master"
+    # - "staging"
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
