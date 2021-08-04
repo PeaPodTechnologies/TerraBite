@@ -3,9 +3,9 @@ Remote config and monitoring dashboard for PeaPod systems.
 
 [![Deploy to Firebase Hosting on Merge](https://github.com/PeaPodTechnologies/CloudPonics/actions/workflows/deploy-master.yml/badge.svg)](https://github.com/PeaPodTechnologies/CloudPonics/actions/workflows/deploy-master.yml)
 
-**Production Build**: https://cloudponics-a0403.firebaseapp.com/
+**Production Build**: https://cloudponics.peapodtech.com
 
-**Pre-Production Build**: TBD
+**Pre-Production Build**: https://cloudponics-a0403--staging-oxcht2pz.web.app
 
 # Architecture
 
