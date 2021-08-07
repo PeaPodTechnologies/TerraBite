@@ -8,7 +8,7 @@ Also a direct remote config and monitoring "admin dashboard" for PeaPod systems.
 
 **Production Build**: https://www.terrabite.com
 
-**Pre-Production Build**: https://cloudponics-a0403--staging-oxcht2pz.web.app
+**Pre-Production Build**: https://terrabite-65296--staging-f4g9o3vo.web.app
 
 # Architecture
 
