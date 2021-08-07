@@ -4,7 +4,7 @@ Order management portal for subscription-based farm-to-table vertical farming, a
 
 Also a direct remote config and monitoring "admin dashboard" for PeaPod systems.
 
-[![Deploy to Firebase Hosting on Merge](https://github.com/PeaPodTechnologies/CloudPonics/actions/workflows/deploy-master.yml/badge.svg)](https://github.com/PeaPodTechnologies/CloudPonics/actions/workflows/deploy-master.yml)
+[![Deploy to Firebase Hosting on Merge](https://github.com/PeaPodTechnologies/TerraBite/actions/workflows/deploy-master.yml/badge.svg)](https://github.com/PeaPodTechnologies/TerraBite/actions/workflows/deploy-master.yml)
 
 **Production Build**: https://www.terrabite.com
 
