@@ -33,13 +33,13 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
     const [gridData, setGridData] = useState(props.items);
     const user = useAuth();
     useEffect(() => {
-        firebase.firestore().collection('subscriptions').where('owner', '==', user?.uid).get().then(docs=>{
-            const data = docs.docs.map(doc=>{
+        firebase.firestore().collection('subscriptions').where('owner', '==', user?.uid).onSnapshot(snapshot=>{
+            const data = snapshot.docs.map(doc=>{
                 return ({item: doc.data()} as SubscriptionItemProps)
             });
-            console.log(data);
             setGridData(data);
         })
+        
     }, [user]);
 
     return (

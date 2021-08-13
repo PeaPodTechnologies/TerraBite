@@ -64,7 +64,7 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
             </Typography>
             <Box className={classes.textbox}>
                 <Typography variant="body2">
-                    Delivers from {props.item.source} every {props.item.period} days: {Object.entries(props.item.list).map(entry=>{return entry[1]+'x '+entry[0]}).join(", ")}
+                    Delivers from {props.item.source} every {props.item.period} days: {Object.entries(props.item.list).filter(entry=> {return Number(entry[1])>0}).map(entry=>{return entry[1]+'x '+entry[0]}).join(", ")}
                 </Typography>
             </Box>
             <Box className={classes.buttonbox}>
