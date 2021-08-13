@@ -84,7 +84,6 @@ export default function SignupForm(props: SignupProps) {
     const [period, setPeriod] = useState<number>(7);
 
     const incomplete = Object.values(selection).every(value=>{return value.quantity === 0}) || address.length < 1;
-    console.log(address)
     return (
         <div>
             <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }}>
