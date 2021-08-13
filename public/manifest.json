@@ -3,14 +3,9 @@
   "name": "TerraBite Food",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo.png",
+      "src": "icon.png",
       "type": "image/png",
-      "sizes": "1230x1230"
+      "sizes": "600x600"
     }
   ],
   "start_url": ".",
