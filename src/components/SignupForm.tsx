@@ -79,11 +79,12 @@ export default function SignupForm(props: SignupProps) {
         setSelection(newstate);
     };
 
-    // Address state
+    // Shipping states
     const [address, setAddress] = useState<string>('');
+    const [period, setPeriod] = useState<number>(7);
 
-    const incomplete = Object.values(selection).every(value=>{return value.quantity === 0});
-    console.log(selection)
+    const incomplete = Object.values(selection).every(value=>{return value.quantity === 0}) || address.length < 1;
+    console.log(address)
     return (
         <div>
             <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }}>
@@ -99,7 +100,18 @@ export default function SignupForm(props: SignupProps) {
                             )
                         })}
                     </FormGroup>
-                    <FormLabel component="legend">Enter shipping address:</FormLabel>
+                    <FormLabel component="legend">Select Shipping Period:</FormLabel>
+                    <FormGroup>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                type="number"
+                                value={period}
+                                onChange={(event)=>{setPeriod(Math.min(Math.max(Number(event.target.value), 1),14))}}
+                                helperText="Days Between Shipments"
+                                />
+                        </FormControl>
+                    </FormGroup>
+                    <FormLabel component="legend">Enter Shipping Address:</FormLabel>
                     <FormGroup>
                         <FormControl className={classes.formControl}>
                             <TextField placeholder="123 Main St., Springfield, USA" value={address} onChange={(event)=>{setAddress(event.target.value)}}/>
@@ -107,7 +119,7 @@ export default function SignupForm(props: SignupProps) {
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={()=>{props.placeOrderAndClose(selection, 7, "no address yet")}} color="primary" disabled={incomplete}>
+                    <Button autoFocus onClick={()=>{props.placeOrderAndClose(selection, period, address)}} color="primary" disabled={incomplete}>
                     Place Recurring Order
                     </Button>
                 </DialogActions>
