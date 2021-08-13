@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        maxWidth: '18vw',
-        minWidth: '200px'
+        width: '300px',
+        height: '200px'
     },
     title: {
         flexGrow: 1
@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textbox: {
         padding: '.5em',
-        minHeight: '3.5em',
-        maxHeight: '3.5em',
+        height: '4.5em',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
