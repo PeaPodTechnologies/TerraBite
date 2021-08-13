@@ -4,7 +4,7 @@ import { Box, Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useState } from 'react';
 
-import SignupForm from './SignupForm';
+import SignupForm, { ProduceSelection } from './SignupForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,8 +36,9 @@ export default function NewSubscription(props: any) {
     const handleClose = () => {
         setOpen(false);
     };
-    const placeOrderAndClose = (options: {[key: string]: number}, period: number, address: string): void => {
+    const placeOrderAndClose = (selection: {[key: string]: ProduceSelection}, period: number, address: string): void => {
         // Place the order here
+        
         handleClose()
     }
 

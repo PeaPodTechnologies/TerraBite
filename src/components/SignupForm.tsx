@@ -10,7 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Button, Box } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useAuth } from '../contexts/AuthContext';
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -28,9 +29,10 @@ const styles = (theme: Theme) => createStyles({
         top: theme.spacing(1),
         color: theme.palette.grey[500],
     },
-    checklistbox: {
-        minWidth: '30vw'
-    },
+    dialogPaper: {
+        maxHeight: '50vh',
+        width: '40vw'
+    }
 })
 
 const useStyles = makeStyles(styles);
@@ -40,49 +42,63 @@ const useStyles = makeStyles(styles);
 // Props
 interface SignupProps {
     openState: boolean;
-    placeOrderAndClose: (options: {[key: string]: number}, period: number, address: string)=>void; 
+    placeOrderAndClose: (selection: {[id: string]: ProduceSelection}, period: number, address: string)=>void; 
     handleClose: ()=>void;
+}
+
+type ProduceOption = {
+    name: string,
+    price: number
+}
+
+export type ProduceSelection = {
+    quantity: number,
+    option: ProduceOption
 }
 
 export default function SignupForm(props: SignupProps) {
     const classes = useStyles();
 
-    const [selection, setSelection] = useState<{[key: string]: number}>({});
+    // Selection state
+    const [selection, setSelection] = useState<{[id: string]: ProduceSelection}>({});
     const user = useAuth();
     useEffect(() => {
         firebase.firestore().collection('options').get().then(docs=>{
-            const data = docs.docs.map(doc=>{
-                return [doc.id, 0]
-            });
-            setSelection(Object.fromEntries(data));
+            setSelection(Object.fromEntries(docs.docs.map(doc=>{
+                return [doc.id, {quantity: 0, option: {name: doc.data().name, price: doc.data().price}}]
+            })));
         })
     }, [user]);
-    
-    const updateSelection = (label: string, quantity: number) => {
+    const updateSelection = (option: string, quantity: number) => {
         const newstate = Object.fromEntries(Object.entries(selection));
-        newstate[label] = quantity;
+        newstate[option].quantity = quantity;
         setSelection(newstate);
     };
 
-    const incomplete = Object.values(selection).every(value=>{return value === 0});
+    // Address state
+    const [address, setAddress] = useState<string>('');
+
+    const incomplete = Object.values(selection).every(value=>{return value.quantity === 0});
     return (
         <div>
-            <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState}>
-            <Box className={classes.checklistbox}>
+            <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }}>
                 <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
                     Create a New Subscription
                 </DialogTitle>
                 <DialogContent dividers>
-                <FormLabel component="legend">Select Produce:</FormLabel>
-                <FormGroup>
-                    {Object.entries(selection).map((option, index)=>{
-                        return (
-                            <ProduceDropdown key={index} option={option[0]} label={option[0].charAt(0).toUpperCase()+option[0].substring(1)} quantity={option[1]} updateSelection={updateSelection}/>
-                        )
-                    })}
-                </FormGroup>
+                    <FormLabel component="legend">Select Produce:</FormLabel>
+                    <FormGroup>
+                        {Object.entries(selection).map((option, index)=>{
+                            return (
+                                <ProduceDropdown key={index} option={option[0]} label={option[1].option.name+': '+option[1].option.price} quantity={option[1].quantity} updateSelection={updateSelection}/>
+                            )
+                        })}
+                    </FormGroup>
+                    <FormLabel component="legend">Enter shipping address:</FormLabel>
+                    <FormGroup>
+                        <TextField placeholder="123 Main St., Springfield, USA" value={address} onChange={(event)=>{setAddress(event.target.value)}}/>
+                    </FormGroup>
                 </DialogContent>
-                </Box>
                 <DialogActions>
                     <Button autoFocus onClick={()=>{props.placeOrderAndClose(selection, 7, "no address yet")}} color="primary" disabled={incomplete}>
                     Place Recurring Order
