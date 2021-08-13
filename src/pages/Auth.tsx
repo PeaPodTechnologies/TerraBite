@@ -7,7 +7,6 @@ import { makeStyles, createStyles } from '@material-ui/styles';
 // Configure FirebaseUI
 const uiConfig: firebaseui.auth.Config = {
   signInFlow: 'redirect',
-  signInSuccessUrl: '/dashboard',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
