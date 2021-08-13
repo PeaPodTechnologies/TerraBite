@@ -15,8 +15,9 @@ import { TextField } from '@material-ui/core';
 import { useAuth } from '../contexts/AuthContext';
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import FormControl from '@material-ui/core/FormControl';
 
-import ProduceDropdown from './ProduceDropdown';
+import ProduceInput from './ProduceInput';
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -32,7 +33,10 @@ const styles = (theme: Theme) => createStyles({
     dialogPaper: {
         maxHeight: '50vh',
         width: '40vw'
-    }
+    },
+    formControl: {
+        margin: theme.spacing(3),
+    },
 })
 
 const useStyles = makeStyles(styles);
@@ -79,6 +83,7 @@ export default function SignupForm(props: SignupProps) {
     const [address, setAddress] = useState<string>('');
 
     const incomplete = Object.values(selection).every(value=>{return value.quantity === 0});
+    console.log(selection)
     return (
         <div>
             <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }}>
@@ -90,13 +95,15 @@ export default function SignupForm(props: SignupProps) {
                     <FormGroup>
                         {Object.entries(selection).map((option, index)=>{
                             return (
-                                <ProduceDropdown key={index} option={option[0]} label={option[1].option.name+': '+option[1].option.price} quantity={option[1].quantity} updateSelection={updateSelection}/>
+                                <ProduceInput key={index} option={option[0]} label={option[1].option.name+': $'+option[1].option.price} quantity={option[1].quantity} updateSelection={updateSelection}/>
                             )
                         })}
                     </FormGroup>
                     <FormLabel component="legend">Enter shipping address:</FormLabel>
                     <FormGroup>
-                        <TextField placeholder="123 Main St., Springfield, USA" value={address} onChange={(event)=>{setAddress(event.target.value)}}/>
+                        <FormControl className={classes.formControl}>
+                            <TextField placeholder="123 Main St., Springfield, USA" value={address} onChange={(event)=>{setAddress(event.target.value)}}/>
+                        </FormControl>
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
