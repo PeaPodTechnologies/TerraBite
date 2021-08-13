@@ -53,8 +53,8 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                     </Box>
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
-                    {gridData?.map(item => {
-                        return (<Grid item><SubscriptionItem item={item.item}/></Grid>);
+                    {gridData.map((item, index) => {
+                        return (<Grid item key={index}><SubscriptionItem item={item.item}/></Grid>);
                     })}
                     <Grid item><NewSubscription/></Grid>
                 </Grid>
