@@ -20,11 +20,22 @@ const theme = createTheme({
   },
   palette: {
     background: {
-      default: "#F4F4F7"
+      default: "#F4F4F7",
+      paper: "#DCDCF9"
+    },
+    text: {
+      primary: "#434051",
+      secondary: "#383645"
     },
     primary: {
-      main: "#4343ed",
+      main: "#4343ED",
+      light: "#DCDCF9",
+      contrastText: "#F4F4F7"
     },
+    secondary: {
+      main: "#F5296D",
+      contrastText: "#F4F4F7"
+    }
   },
 });
 
