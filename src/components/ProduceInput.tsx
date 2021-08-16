@@ -28,7 +28,7 @@ interface ProduceInputProps {
 // Component
 const ProduceInput : React.FC<ProduceInputProps> = (props: ProduceInputProps) => {
     const handleChange = (event: React.ChangeEvent<{ value: string }>, option: string) => {
-        props.updateSelection(option, Number(event.target.value));
+        props.updateSelection(option, Math.min(Math.max(Number(event.target.value), 0), 20));
     };
     
     const classes = useStyles();

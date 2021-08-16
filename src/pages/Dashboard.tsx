@@ -10,10 +10,12 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
         },
         header: {
-            margin: '1%',
+            paddingTop: '2%',
+            paddingBottom: '1%',
             display: 'flex',
-            minWidth: '100vh',
+            width: '100vw',
             justifyContent: 'center',
+            alignContent: 'center'
         },
         grid: {
             display: "flex",

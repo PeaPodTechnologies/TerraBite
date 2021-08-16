@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
         padding: '2%',
-        minWidth: '90vw',
+        width: '100%',
         textAlign: 'center'
     }
   }),
@@ -54,9 +54,9 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
                     {gridData.map((item, index) => {
-                        return (<Grid item key={index}><SubscriptionItem item={item.item}/></Grid>);
+                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item}/></Grid>);
                     })}
-                    <Grid item><NewSubscription/></Grid>
+                    <Grid item xs={12} sm={6} md={4}><NewSubscription/></Grid>
                 </Grid>
             </>)}
         </div>

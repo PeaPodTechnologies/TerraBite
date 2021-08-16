@@ -15,14 +15,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
         display: 'flex',
-        textAlign: 'center',
         flexDirection: "column",
+        textAlign: 'center',
         padding: theme.spacing(2),
         color: theme.palette.text.secondary,
-        height: '200px',
-        width: '300px',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '25vh'
     },
     button: {
         margin: theme.spacing(1),

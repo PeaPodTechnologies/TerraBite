@@ -6,31 +6,24 @@ import { Button, Box } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-        padding: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
         textAlign: 'center',
+        padding: theme.spacing(3),
         color: theme.palette.text.secondary,
-        width: '300px',
-        height: '200px'
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '25vh'
     },
     title: {
         flexGrow: 1
     },
     buttonbox: {
-        padding: '.5em'
+        padding: theme.spacing(1)
     },
     textbox: {
         padding: '.5em',
         height: '4.5em',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    imagebox: {
-        padding: '1em',
-    },
-    image: {
-        maxWidth: '70%', 
-        maxHeight: '70%'
     },
     titlebox: {
         fontWeight: "bold"
@@ -69,7 +62,11 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
             </Box>
             <Box className={classes.buttonbox}>
                 <Button variant="contained" color="primary" onClick={()=>{}}>
-                    Manage
+                    Modify
+                </Button>
+            <Box className={classes.buttonbox}></Box>
+                <Button variant="contained" color="secondary" onClick={()=>{}}>
+                    Delete
                 </Button>
             </Box>
         </Paper>
