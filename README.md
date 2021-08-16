@@ -8,7 +8,7 @@ Also a direct remote config and monitoring "admin dashboard" for PeaPod systems.
 
 **Production Build**: https://www.terrabite.com
 
-**Pre-Production Build**: [https://terrabite-65296--staging-nphz4olm.web.app](https://terrabite-65296--staging-nphz4olm.web.app
+**Pre-Production Build**: https://terrabite-65296--staging-nphz4olm.web.app
 
 # Architecture
 
