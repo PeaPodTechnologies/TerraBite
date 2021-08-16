@@ -15,6 +15,9 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'AvantGarde'
+  },
   palette: {
     background: {
       default: "#F4F4F7"
