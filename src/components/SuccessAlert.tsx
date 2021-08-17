@@ -10,7 +10,6 @@ const SuccessAlert: FC<{openState: boolean, onClose: ()=>void}> = (props) => {
             </MuiAlert>
         </Snackbar>
     );
-    
-}
+};
 
-export default SuccessAlert
+export default SuccessAlert;

@@ -1,7 +1,10 @@
-// import React from 'react'
-// import firebase from 'firebase/app';
+import { FC } from 'react';
+
 import { makeStyles, createStyles } from '@material-ui/styles';
-import { Theme, Box, Typography } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
+
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 import SubscriptionGrid from '../components/SubscriptionGrid';
 
@@ -19,24 +22,20 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center'
         },
         grid: {
-            display: "flex",
-            justifyContent: "center",
+            display: 'flex',
+            justifyContent: 'center',
             padding: theme.spacing(3)
         }
     }),
 );
 
-export default function Dashboard () {
+const Dashboard:FC = () => {
     const classes = useStyles();
 
-    var items = [];
-    for(var i = 1; i < 9; i++){
-        items.push({item: {title: `Form ${i}`, content:'This is some placeholder content. This will be replaced with a description for the form.', imageurl: 'https://via.placeholder.com/150'}})
-    }
     return (
         <div className={classes.root}>
             <Box className={classes.header} >
-                <Typography variant="h4">
+                <Typography variant='h4'>
                     Manage Subscriptions
                 </Typography>
             </Box>
@@ -44,5 +43,7 @@ export default function Dashboard () {
                 <SubscriptionGrid />
             </Box>
         </div>
-    )
-}
+    );
+};
+
+export default Dashboard;
