@@ -1,7 +1,18 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Button, Box } from '@material-ui/core';
+import { Button, Box, Snackbar } from '@material-ui/core';
 import GridCard from './GridCard';
+import React, { useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import firebase from 'firebase';
+import 'firebase/firestore';
+
+import { ProduceSelection } from './SignupForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,13 +41,36 @@ export type SubscriptionItemProps = {
         list: {
             [key: string]: number
         }
-    }
+    },
+    docPath: string
 }
 
 export default function SubscriptionItem(props: SubscriptionItemProps) {
     const classes = useStyles();
 
-    console.log(props.item)
+    // Delete confirmation dialog
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const handleDeleteOpen = () => {
+        setDeleteOpen(true);
+    };
+    const handleDeleteClose = () => {
+        setDeleteOpen(false);
+    };
+    const handleCancelAndClose = () => {
+        handleDeleteClose();
+        firebase.firestore().doc(props.docPath).delete().then(()=>{
+            setDeleteAlert(true);
+        })
+    }
+
+    // Delete confirmation snackbar
+    const [deleteAlert, setDeleteAlert] = useState(false);
+    const handleDeleteAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setDeleteAlert(false);
+    };
 
     return (
         <GridCard>
@@ -55,10 +89,36 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
                     Modify
                 </Button>
             <Box className={classes.buttonbox}></Box>
-                <Button variant="contained" color="secondary" onClick={()=>{}}>
+                <Button variant="contained" color="secondary" onClick={handleDeleteOpen}>
                     Delete
                 </Button>
             </Box>
+            <Dialog
+                open={deleteOpen}
+                onClose={handleDeleteClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{`Delete Subscription for ${props.item.destination}?`}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            This subscription will be cancelled immediately. Any produce already paid for will be shipped, and billing will stop.
+                        </DialogContentText>
+                    </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDeleteClose} color="inherit">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleCancelAndClose} color="secondary" autoFocus>
+                        Confirm
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Snackbar open={deleteAlert} autoHideDuration={6000} onClose={handleDeleteAlertClose}>
+                <Alert onClose={handleDeleteAlertClose} severity="success">
+                    Subscription cancelled!
+                </Alert>
+            </Snackbar>
         </GridCard>
     )
 }

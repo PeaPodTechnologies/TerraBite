@@ -25,8 +25,6 @@ const AuthProvider: FC = ({ children }) => {
 
     useEffect(()=>{
         return firebase.auth().onAuthStateChanged(user=>{
-            console.log('PING')
-            console.log(user?.displayName);
             setCurrentUser(user);
         })
     },[])

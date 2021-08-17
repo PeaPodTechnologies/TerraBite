@@ -35,7 +35,7 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
     useEffect(() => {
         firebase.firestore().collection('subscriptions').where('owner', '==', user?.uid).onSnapshot(snapshot=>{
             const data = snapshot.docs.map(doc=>{
-                return ({item: doc.data()} as SubscriptionItemProps)
+                return ({item: doc.data(), docPath: doc.ref.path} as SubscriptionItemProps)
             });
             setGridData(data);
         })
@@ -54,7 +54,7 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
                     {gridData.map((item, index) => {
-                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item}/></Grid>);
+                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item} docPath={item.docPath}/></Grid>);
                     })}
                     <Grid item xs={12} sm={6} md={4}><NewSubscription/></Grid>
                 </Grid>
