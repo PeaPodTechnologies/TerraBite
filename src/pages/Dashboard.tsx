@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             width: '100vw',
             justifyContent: 'center',
-            alignContent: 'center'
+            alignContent: 'center',
+            textAlign: 'center'
         },
         grid: {
             display: "flex",

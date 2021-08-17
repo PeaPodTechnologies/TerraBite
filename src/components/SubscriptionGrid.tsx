@@ -4,17 +4,18 @@ import { CircularProgress, Box, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import firebase from 'firebase/app';
 import  "firebase/firestore";
-import Alert from '@material-ui/lab/Alert';
-import { Snackbar } from '@material-ui/core';
 
 import SubscriptionItem, { SubscriptionItemProps } from './SubscriptionItem';
 import NewSubscription from './NewSubscription';
 import { useAuth } from '../contexts/AuthContext';
+import SuccessAlert from './SuccessAlert';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        width: '80vw',
+        width: '100vw',
+        paddingLeft: '10%',
+        paddingRight: '10%',
         justifyContent: "center"
     },
     header: {
@@ -66,17 +67,16 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
                     {gridData.map((item, index) => {
-                        return (<SubscriptionItem item={item.item} docPath={item.docPath} deleteAlert={handleDeleteAlertOpen}/>);
+                        return (<SubscriptionItem key={index} item={item.item} docPath={item.docPath} deleteAlert={handleDeleteAlertOpen}/>);
                     })}
                     <NewSubscription/>
-                </Grid>
-                <Snackbar open={deleteAlert} autoHideDuration={6000} onClose={handleDeleteAlertClose}>
-                    <Alert onClose={handleDeleteAlertClose} severity="success">
+                    <SuccessAlert openState={deleteAlert} onClose={handleDeleteAlertClose}>
                         Subscription cancelled!
-                    </Alert>
-                </Snackbar>
+                    </SuccessAlert>
+                </Grid>
             </>)}
         </div>
     );
 }
+
 export default SubscriptionGrid;

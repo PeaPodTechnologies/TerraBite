@@ -15,14 +15,14 @@ import 'firebase/firestore';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
-        flexGrow: 1
     },
     buttonbox: {
         padding: theme.spacing(1)
     },
     textbox: {
         padding: '.5em',
-        height: '4.5em',
+        flexGrow: 1,
+        verticalAlign: 'top'
     },
     titlebox: {
         fontWeight: "bold"

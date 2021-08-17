@@ -2,13 +2,12 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useState } from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import SignupForm, { ProduceSelection } from './SignupForm';
 import GridCard from './GridCard';
+import SuccessAlert from './SuccessAlert';
 import { useAuth } from '../contexts/AuthContext';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,22 +58,16 @@ export default function NewSubscription(props: any) {
     };
 
     return (
-        <GridCard>
-            <Box>
-                <Button variant="contained" color="primary" className={classes.button} startIcon={<AddCircleOutlineIcon fontSize="large" />} onClick={handleClickOpen}>
-                    New
-                </Button>
-            </Box>
+        <>
+            <GridCard>
+                <Box>
+                    <Button variant="contained" color="primary" className={classes.button} startIcon={<AddCircleOutlineIcon fontSize="large" />} onClick={handleClickOpen}>
+                        New
+                    </Button>
+                </Box>
+            </GridCard>
             <SignupForm openState={open} placeOrderAndClose={placeOrderAndClose} handleClose={handleClose} />
-            <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlertClose}>
-                <Alert onClose={handleAlertClose} severity="success">
-                    Order placed successfully!
-                </Alert>
-            </Snackbar>
-        </GridCard>
+            <SuccessAlert openState={alert} onClose={handleAlertClose}>Order placed successfully!</SuccessAlert>
+        </>
     )
-}
-
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }

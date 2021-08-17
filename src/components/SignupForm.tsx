@@ -31,8 +31,8 @@ const styles = (theme: Theme) => createStyles({
         color: theme.palette.grey[500],
     },
     dialogPaper: {
-        maxHeight: '50vh',
-        width: '40vw'
+        height: '60vh',
+        minWidth: '40vw'
     },
     formControl: {
         margin: theme.spacing(3),
@@ -93,7 +93,7 @@ export default function SignupForm(props: SignupProps) {
     const incomplete = Object.values(selection).every(value=>{return value.quantity === 0}) || address.length < 1;
     return (
         <div>
-            <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }}>
+            <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.openState} scroll='paper' classes={{ paper: classes.dialogPaper }} maxWidth={'sm'}>
                 <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
                     Create a New Subscription
                 </DialogTitle>

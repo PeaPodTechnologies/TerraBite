@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.text.secondary,
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '18em'
+        minHeight: '20em'
     },
   })
 )
