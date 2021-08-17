@@ -3,7 +3,7 @@ import { alpha, makeStyles, Theme, createStyles } from '@material-ui/core/styles
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 // import InputBase from '@material-ui/core/InputBase';
 // import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,14 +18,6 @@ import { useAuth } from '../contexts/AuthContext';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { Link } from 'react-router-dom';
-
-import '../Logos/logo.css';
-import logo from '../Logos/logo_light.png';
-/*
-import styled from 'styled-components';
-const Logo = styled.image`
-  width: 10%;
-`; //*/
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,6 +82,10 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    logo: {
+      paddingTop: "3px",
+      maxWidth: "180px"
+    }
   }),
 );
 
@@ -193,8 +189,7 @@ export default function PrimarySearchAppBar() {
           {/*<Typography className={classes.title} variant="h6" noWrap>
             TerraBite
           </Typography>*/}
-          {/*<Logo src={logo} alt='Logo'></Logo>*/}
-          <img src={logo} alt="Logo" className='logo'/>
+          <img src="assets/images/logo_light.png" alt="Logo" className={classes.logo}/>
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
