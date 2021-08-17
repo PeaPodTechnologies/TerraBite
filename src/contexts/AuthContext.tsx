@@ -14,14 +14,14 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-const AuthContext = createContext<null | firebase.User>(firebase.auth().currentUser);
+const AuthContext = createContext<null | undefined | firebase.User>(undefined);
 
 export function useAuth(){
     return useContext(AuthContext);
 }
 
 const AuthProvider: FC = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<null | firebase.User>(firebase.auth().currentUser);
+    const [currentUser, setCurrentUser] = useState<null | undefined | firebase.User>(undefined);
 
     useEffect(()=>{
         return firebase.auth().onAuthStateChanged(user=>{

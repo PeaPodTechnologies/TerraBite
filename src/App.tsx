@@ -5,6 +5,7 @@ import {useAuth} from './contexts/AuthContext';
 
 // Components
 import NavBar from './components/NavBar'
+import { CircularProgress } from '@material-ui/core';
 
 // Pages
 import Dashboard from './pages/Dashboard';
@@ -46,23 +47,31 @@ const theme = createTheme({
   }
 });
 
+const AuthLoader: React.FC = ({children}) => {
+  return (
+    <>{useAuth() === undefined ? (<div style={{display: "flex", justifyContent: "center", marginTop: "2%"}}><CircularProgress/></div>) : (<div>{children}</div>)}</>
+  )
+}
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <NavBar />
-        <Switch>
-          <Route exact path='/'>
-            <Redirect to="/dashboard"/>
-          </Route>
-          <Route exact path='/dashboard'>
-            {useAuth() ? <Dashboard/> : <Redirect to="/login"/>}
-          </Route>
-          <Route exact path='/login'>
-            {useAuth() ? <Redirect to="/dashboard"/> : <Auth/> }
-          </Route>
-        </Switch>
+        <AuthLoader>
+          <Switch>
+            <Route exact path='/'> 
+              <Redirect to="/dashboard"/>
+            </Route>
+            <Route exact path='/dashboard'>
+              {useAuth() ? <Dashboard/> : <Redirect to="/login"/>}
+            </Route>
+            <Route exact path='/login'>
+              {useAuth() ? <Redirect to="/dashboard"/> : <Auth/> }
+            </Route>
+          </Switch>
+        </AuthLoader>
       </Router>
     </ThemeProvider>
   );
