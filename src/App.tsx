@@ -37,6 +37,13 @@ const theme = createTheme({
       contrastText: "#F4F4F7"
     }
   },
+  overrides: {
+    MuiPaper: {
+      rounded: {
+        borderRadius: 25
+      }
+    }
+  }
 });
 
 function App() {

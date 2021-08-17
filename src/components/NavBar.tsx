@@ -19,6 +19,14 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { Link } from 'react-router-dom';
 
+import '../Logos/logo.css';
+import logo from '../Logos/logo_light.png';
+/*
+import styled from 'styled-components';
+const Logo = styled.image`
+  width: 10%;
+`; //*/
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grow: {
@@ -182,9 +190,11 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography className={classes.title} variant="h6" noWrap>
+          {/*<Typography className={classes.title} variant="h6" noWrap>
             TerraBite
-          </Typography>
+          </Typography>*/}
+          {/*<Logo src={logo} alt='Logo'></Logo>*/}
+          <img src={logo} alt="Logo" className='logo'/>
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
