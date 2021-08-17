@@ -14,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        flexGrow: 1,
+        width: '90vw',
         justifyContent: "center"
     },
     header: {
