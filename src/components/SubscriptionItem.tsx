@@ -1,9 +1,9 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Button, Box, Snackbar } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import GridCard from './GridCard';
-import React, { useState } from 'react';
-import Alert from '@material-ui/lab/Alert';
+import { useState } from 'react';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,8 +11,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from 'firebase';
 import 'firebase/firestore';
-
-import { ProduceSelection } from './SignupForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +40,8 @@ export type SubscriptionItemProps = {
             [key: string]: number
         }
     },
-    docPath: string
+    docPath: string,
+    deleteAlert: ()=>void
 }
 
 export default function SubscriptionItem(props: SubscriptionItemProps) {
@@ -58,19 +57,9 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
     };
     const handleCancelAndClose = () => {
         handleDeleteClose();
-        firebase.firestore().doc(props.docPath).delete().then(()=>{
-            setDeleteAlert(true);
-        })
+        props.deleteAlert();
+        firebase.firestore().doc(props.docPath).delete()
     }
-
-    // Delete confirmation snackbar
-    const [deleteAlert, setDeleteAlert] = useState(false);
-    const handleDeleteAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setDeleteAlert(false);
-    };
 
     return (
         <GridCard>
@@ -114,11 +103,6 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Snackbar open={deleteAlert} autoHideDuration={6000} onClose={handleDeleteAlertClose}>
-                <Alert onClose={handleDeleteAlertClose} severity="success">
-                    Subscription cancelled!
-                </Alert>
-            </Snackbar>
         </GridCard>
     )
 }

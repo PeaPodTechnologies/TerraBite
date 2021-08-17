@@ -4,6 +4,8 @@ import { CircularProgress, Box, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import firebase from 'firebase/app';
 import  "firebase/firestore";
+import Alert from '@material-ui/lab/Alert';
+import { Snackbar } from '@material-ui/core';
 
 import SubscriptionItem, { SubscriptionItemProps } from './SubscriptionItem';
 import NewSubscription from './NewSubscription';
@@ -42,6 +44,16 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
         
     }, [user]);
 
+    // Delete confirmation snackbar
+    const [deleteAlert, setDeleteAlert] = useState(false);
+    const handleDeleteAlertOpen = () => {setDeleteAlert(true)};
+    const handleDeleteAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setDeleteAlert(false);
+    };
+
     return (
         <div>
             {gridData === undefined ? (<CircularProgress/>) : (<>
@@ -54,10 +66,15 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
                     {gridData.map((item, index) => {
-                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item} docPath={item.docPath}/></Grid>);
+                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item} docPath={item.docPath} deleteAlert={handleDeleteAlertOpen}/></Grid>);
                     })}
                     <Grid item xs={12} sm={6} md={4}><NewSubscription/></Grid>
                 </Grid>
+                <Snackbar open={deleteAlert} autoHideDuration={6000} onClose={handleDeleteAlertClose}>
+                    <Alert onClose={handleDeleteAlertClose} severity="success">
+                        Subscription cancelled!
+                    </Alert>
+                </Snackbar>
             </>)}
         </div>
     );
