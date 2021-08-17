@@ -78,6 +78,13 @@ export default function SignupForm(props: SignupProps) {
         newstate[option].quantity = quantity;
         setSelection(newstate);
     };
+    const resetForm = () => {
+        for (const item of Object.entries(selection)) {
+            updateSelection(item[0], 0);
+        }
+        setAddress('');
+        setPeriod(7);
+    }
 
     // Shipping states
     const [address, setAddress] = useState<string>('');
@@ -118,7 +125,7 @@ export default function SignupForm(props: SignupProps) {
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={()=>{props.placeOrderAndClose(selection, period, address)}} color="primary" disabled={incomplete}>
+                    <Button autoFocus onClick={()=>{props.placeOrderAndClose(selection, period, address); resetForm()}} color="primary" disabled={incomplete}>
                     Place Recurring Order
                     </Button>
                 </DialogActions>

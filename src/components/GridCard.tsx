@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,9 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const GridCard : React.FC = ({children}) => {
     const classes = useStyles();
     return (
+      <Grid item xs={12} sm={6} md={3}>
         <Paper className={classes.paper} elevation={5}>
             {children}
         </Paper>
+      </Grid>
     )
 }
 

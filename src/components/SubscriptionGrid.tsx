@@ -14,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        width: '90vw',
+        width: '80vw',
         justifyContent: "center"
     },
     header: {
@@ -66,9 +66,9 @@ const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {it
                 ) : (<></>)}
                 <Grid container spacing={3} className={classes.root}>
                     {gridData.map((item, index) => {
-                        return (<Grid item xs={12} sm={6} md={4} key={index}><SubscriptionItem item={item.item} docPath={item.docPath} deleteAlert={handleDeleteAlertOpen}/></Grid>);
+                        return (<SubscriptionItem item={item.item} docPath={item.docPath} deleteAlert={handleDeleteAlertOpen}/>);
                     })}
-                    <Grid item xs={12} sm={6} md={4}><NewSubscription/></Grid>
+                    <NewSubscription/>
                 </Grid>
                 <Snackbar open={deleteAlert} autoHideDuration={6000} onClose={handleDeleteAlertClose}>
                     <Alert onClose={handleDeleteAlertClose} severity="success">
