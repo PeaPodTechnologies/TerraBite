@@ -61,14 +61,14 @@ function App() {
         <NavBar />
         <AuthLoader>
           <Switch>
-            <Route exact path='/'> 
-              <Redirect to="/dashboard"/>
-            </Route>
             <Route exact path='/dashboard'>
               {useAuth() ? <Dashboard/> : <Redirect to="/login"/>}
             </Route>
             <Route exact path='/login'>
               {useAuth() ? <Redirect to="/dashboard"/> : <Auth/> }
+            </Route>
+            <Route path='/'> 
+              <Redirect to="/dashboard"/>
             </Route>
           </Switch>
         </AuthLoader>

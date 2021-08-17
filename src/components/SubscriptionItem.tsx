@@ -1,20 +1,10 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Button, Box } from '@material-ui/core';
+import GridCard from './GridCard';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    paper: {
-        display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
-        padding: theme.spacing(3),
-        color: theme.palette.text.secondary,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '25vh'
-    },
     title: {
         flexGrow: 1
     },
@@ -48,8 +38,8 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
 
     console.log(props.item)
 
-    return (<div>
-        <Paper className={classes.paper} elevation={5}>
+    return (
+        <GridCard>
             <Typography variant="h6" className={classes.title}>
                 <Box className={classes.titlebox}>
                     {props.item.destination}
@@ -69,6 +59,6 @@ export default function SubscriptionItem(props: SubscriptionItemProps) {
                     Delete
                 </Button>
             </Box>
-        </Paper>
-    </div>)
+        </GridCard>
+    )
 }

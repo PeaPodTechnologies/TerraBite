@@ -9,20 +9,11 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import SignupForm, { ProduceSelection } from './SignupForm';
+import GridCard from './GridCard';
 import { useAuth } from '../contexts/AuthContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    paper: {
-        display: 'flex',
-        flexDirection: "column",
-        textAlign: 'center',
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '25vh'
-    },
     button: {
         margin: theme.spacing(1),
     },
@@ -68,8 +59,8 @@ export default function NewSubscription(props: any) {
         setAlert(false);
     };
 
-    return (<div>
-        <Paper className={classes.paper} elevation={5}>
+    return (
+        <GridCard>
             <Box>
                 <Button variant="contained" color="primary" className={classes.button} startIcon={<AddCircleOutlineIcon fontSize="large" />} onClick={handleClickOpen}>
                     New
@@ -81,8 +72,8 @@ export default function NewSubscription(props: any) {
                     Order placed successfully!
                 </Alert>
             </Snackbar>
-        </Paper>
-    </div>)
+        </GridCard>
+    )
 }
 
 function Alert(props: AlertProps) {
