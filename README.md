@@ -37,6 +37,7 @@ Serverless hosting via Firebase.
 - [Full Stack Tutorial](https://www.youtube.com/watch?v=m_u6P5k0vP0)
 - [React w/ TypeScript Example](https://www.typescriptlang.org/play?jsx=2&esModuleInterop=true&e=196#example/typescript-with-react)
 - [React TypeScript Cheat Sheet](https://react-typescript-cheatsheet.netlify.app/)
+- [Cypress Development](https://docs.cypress.io/api/table-of-contents)
 
 ## Local Development
 
