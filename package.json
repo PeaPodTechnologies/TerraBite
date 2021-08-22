@@ -29,7 +29,9 @@
     "build": "npm install && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "if [ \"$(git rev-parse --abbrev-ref HEAD)\" == \"staging\" ]; then firebase hosting:channel:deploy staging --expires 30d; elif [ \"$(git rev-parse --abbrev-ref HEAD)\" == \"master\" ]; then firebase deploy; else echo Not on a valid deployment branch!; fi"
+    "deploy": "if [ \"$(git rev-parse --abbrev-ref HEAD)\" == \"staging\" ]; then firebase hosting:channel:deploy staging --expires 30d; elif [ \"$(git rev-parse --abbrev-ref HEAD)\" == \"master\" ]; then firebase deploy; else echo Not on a valid deployment branch!; fi",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "cypress": "^8.3.0"
   }
 }
