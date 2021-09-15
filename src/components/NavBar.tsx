@@ -162,7 +162,7 @@ const NavBar:FC = () => {
         <div className={classes.grow}>
             <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
                 <Toolbar>
-                    <img src="assets/images/logo.png" alt="Logo" className={classes.logo}/>
+                    <a href='/'><img src="assets/images/logo.png" alt="Logo" className={classes.logo}/></a>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton
