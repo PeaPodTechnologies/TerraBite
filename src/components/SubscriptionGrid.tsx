@@ -1,65 +1,110 @@
-import { useEffect, useState, FunctionComponent } from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { CircularProgress, Box, Typography } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import firebase from 'firebase/app';
-import  "firebase/firestore";
+// React engine
+import { useEffect, useState, FC } from 'react';
 
+// MUI Core
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+
+// MUI other
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+
+// Auth, Firebase
+import { useAuth } from '../contexts/AuthContext';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+// My Components, Types
 import SubscriptionItem, { SubscriptionItemProps } from './SubscriptionItem';
 import NewSubscription from './NewSubscription';
-import { useAuth } from '../contexts/AuthContext';
+import SuccessAlert from './SuccessAlert';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-        flexGrow: 1,
-        justifyContent: "center"
-    },
-    header: {
-        padding: '2%',
-        minWidth: '90vw',
-        textAlign: 'center'
-    }
-  }),
+    createStyles({
+        root: {
+            width: '100vw',
+            paddingLeft: '10%',
+            paddingRight: '10%',
+            justifyContent: 'center'
+        },
+        header: {
+            padding: '2%',
+            width: '100%',
+            textAlign: 'center'
+        }
+    })
 );
 
+// Props
 export type SubscriptionGridProps = {
     items?: SubscriptionItemProps[]
 };
 
-const SubscriptionGrid : FunctionComponent<SubscriptionGridProps> = (props = {items: undefined}) => {
+// Main Component
+const SubscriptionGrid : FC<SubscriptionGridProps> = (props = {items: undefined}) => {
     const classes = useStyles();
-
-    const [gridData, setGridData] = useState(props.items);
     const user = useAuth();
+    
+    // Grid data state
+    const [gridData, setGridData] = useState(props.items);
     useEffect(() => {
-        firebase.firestore().collection('subscriptions').where('owner', '==', user?.uid).onSnapshot(snapshot=>{
+        return firebase.firestore().collection('subscriptions').where('owner', '==', user?.uid).onSnapshot(snapshot=>{
             const data = snapshot.docs.map(doc=>{
-                return ({item: doc.data()} as SubscriptionItemProps)
+                return ({
+                    item: doc.data(), 
+                    docPath: doc.ref.path
+                } as SubscriptionItemProps);
             });
             setGridData(data);
-        })
-        
+        });
     }, [user]);
-
+    
+    // Delete success snackbar
+    const [deleteAlert, setDeleteAlert] = useState(false);
+    const handleDeleteAlertOpen = () => {
+        setDeleteAlert(true);
+    };
+    const handleDeleteAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setDeleteAlert(false);
+    };
+    
     return (
         <div>
-            {gridData === undefined ? (<CircularProgress/>) : (<>
-                {gridData.length === 0 ? (
-                    <Box className={classes.header}>
-                        <Typography variant="h6">
-                            No subscriptions found for {user?.displayName}!
-                        </Typography>
-                    </Box>
-                ) : (<></>)}
-                <Grid container spacing={3} className={classes.root}>
-                    {gridData.map((item, index) => {
-                        return (<Grid item key={index}><SubscriptionItem item={item.item}/></Grid>);
-                    })}
-                    <Grid item><NewSubscription/></Grid>
-                </Grid>
-            </>)}
+            {gridData === undefined ? (
+                <CircularProgress/>
+            ) : (
+                <>
+                    {gridData.length === 0 ? (
+                        <Box className={classes.header}>
+                            <Typography variant='h6'>
+                                No subscriptions found for {user?.displayName}!
+                            </Typography>
+                        </Box>
+                    ) : (<></>)}
+                    <Grid container spacing={3} className={classes.root}>
+                        {gridData.map((item, index) => {
+                            return (
+                                <SubscriptionItem 
+                                    key={index} 
+                                    item={item.item} 
+                                    docPath={item.docPath} 
+                                    deleteAlert={handleDeleteAlertOpen}
+                                />
+                            );
+                        })}
+                        <NewSubscription/>
+                        <SuccessAlert openState={deleteAlert} onClose={handleDeleteAlertClose}>
+                            Subscription cancelled!
+                        </SuccessAlert>
+                    </Grid>
+                </>
+            )}
         </div>
     );
-}
+};
+            
 export default SubscriptionGrid;

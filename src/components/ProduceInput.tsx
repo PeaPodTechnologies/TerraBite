@@ -1,7 +1,12 @@
-import { Theme } from '@material-ui/core';
+import { FC, ChangeEvent } from 'react';
+
+// MUI Core
+import { Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
+
+// MUI Other
 import createStyles from '@material-ui/styles/createStyles';
 import makeStyles from '@material-ui/styles/makeStyles';
 
@@ -15,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(2),
         },
     })
-)
+);
 
 // Props
 interface ProduceInputProps {
@@ -25,27 +30,27 @@ interface ProduceInputProps {
     updateSelection: (option: string, quantity: number) => void;
 }
 
-// Component
-const ProduceInput : React.FC<ProduceInputProps> = (props: ProduceInputProps) => {
-    const handleChange = (event: React.ChangeEvent<{ value: string }>, option: string) => {
-        props.updateSelection(option, Number(event.target.value));
+// Main Component
+const ProduceInput : FC<ProduceInputProps> = (props: ProduceInputProps) => {
+    const handleChange = (event: ChangeEvent<{ value: string }>, option: string) => {
+        props.updateSelection(option, Math.min(Math.max(Number(event.target.value), 0), 20));
     };
     
     const classes = useStyles();
     return (
         <FormControl className={classes.formControl}>
             <TextField
-                type="number"
+                type='number'
                 label={props.label}
                 value={props.quantity}
-                onChange={(event)=>{handleChange(event, props.option)}}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                />
-            <FormHelperText>Units per Day</FormHelperText>
+                onChange={(event)=>{handleChange(event, props.option);}}
+                InputLabelProps={{shrink: true}}
+            />
+            <FormHelperText>
+                Units per Day
+            </FormHelperText>
         </FormControl>
-    )
-}
-
+    );
+};
+    
 export default ProduceInput;

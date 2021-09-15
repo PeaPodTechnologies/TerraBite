@@ -1,39 +1,36 @@
+// React engine
+import { FC, useState, SyntheticEvent } from 'react';
+
+// MUI Core
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
+// MUI Other
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { Box, Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { useState } from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+
+// Auth, Firebase
+import { useAuth } from '../contexts/AuthContext';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
+// My Components, Types
 import SignupForm, { ProduceSelection } from './SignupForm';
-import { useAuth } from '../contexts/AuthContext';
+import GridCard from './GridCard';
+import SuccessAlert from './SuccessAlert';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-        display: 'flex',
-        textAlign: 'center',
-        flexDirection: "column",
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-        height: '200px',
-        width: '300px',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    button: {
-        margin: theme.spacing(1),
-    },
-  }),
+    createStyles({
+        button: {
+            margin: theme.spacing(1),
+        },
+    }),
 );
 
-export default function NewSubscription(props: any) {
+const NewSubscription:FC = () => {
     const classes = useStyles();
     const user = useAuth()?.uid;
-
+    
     // Dialog box open state
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
@@ -42,50 +39,48 @@ export default function NewSubscription(props: any) {
     const handleClose = () => {
         setOpen(false);
     };
-
+    
     const placeOrderAndClose = (selection: {[key: string]: ProduceSelection}, period: number, address: string): void => {
         // Place the order here
-        handleClose()
+        handleClose();
         const list = Object.fromEntries(Object.entries(selection).map(entry=>{
-            return [entry[0], entry[1].quantity]
-        }))
+            return [entry[0], entry[1].quantity];
+        }));
         firebase.firestore().collection('subscriptions').add({
             owner: user,
             destination: address,
             period: period,
-            source: "Cluster Farm 63",
+            source: 'Cluster Farm 63',
             list: list 
         }).then(()=>{
             setAlert(true);
-        })
-    }
-
+        });
+    };
+    
     const [alert, setAlert] = useState(false);
-
-    const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+    
+    const handleAlertClose = (event?: SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setAlert(false);
     };
-
-    return (<div>
-        <Paper className={classes.paper} elevation={5}>
-            <Box>
-                <Button variant="contained" color="primary" className={classes.button} startIcon={<AddCircleOutlineIcon fontSize="large" />} onClick={handleClickOpen}>
-                    New
-                </Button>
-            </Box>
+    
+    return (
+        <>
+            <GridCard>
+                <Box>
+                    <Button variant='contained' color='primary' className={classes.button} startIcon={<AddCircleOutlineIcon fontSize='large' />} onClick={handleClickOpen}>
+                        New
+                    </Button>
+                </Box>
+            </GridCard>
             <SignupForm openState={open} placeOrderAndClose={placeOrderAndClose} handleClose={handleClose} />
-            <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlertClose}>
-                <Alert onClose={handleAlertClose} severity="success">
-                    Order placed successfully!
-                </Alert>
-            </Snackbar>
-        </Paper>
-    </div>)
-}
+            <SuccessAlert openState={alert} onClose={handleAlertClose}>
+                Order placed successfully!
+            </SuccessAlert>
+        </>
+    );
+};
 
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+export default NewSubscription;
