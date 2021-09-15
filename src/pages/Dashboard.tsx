@@ -10,8 +10,6 @@ import SubscriptionGrid from '../components/SubscriptionGrid';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-        },
         header: {
             paddingTop: '2%',
             paddingBottom: '1%',
@@ -33,7 +31,7 @@ const Dashboard:FC = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div>
             <Box className={classes.header} >
                 <Typography variant='h4'>
                     Manage Subscriptions
